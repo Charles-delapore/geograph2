@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "geograph2"
+version = "0.1.0"
+description = "Clean-Room GeoGraph 2.0: Unified Spatial Habitat Topology IR, Spherical DGGS/3D Connectivity, RSP Adjoint Sensitivity, GBF 30x30 Audit, and Embedding Manifolds"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Charles-delapore", email = "274112562+Charles-delapore@users.noreply.github.com"}
+]
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.26",
+    "scipy>=1.11",
+    "pandas>=2.0",
+    "pyarrow>=14.0",
+    "shapely>=2.0",
+]
+
+[project.scripts]
+geograph2 = "geograph2.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
