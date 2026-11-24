@@ -1,0 +1,76 @@
+{
+  "schema_version": "mcp-geograph2/1.0",
+  "name": "geograph2-spatial-ecology",
+  "version": "0.1.0",
+  "description": "Clean-Room GeoGraph 2.0 MCP Agent Skill for spatial habitat connectivity, equal-area spherical DGGS, RSP adjoint sensitivity, and GBF 30x30 policy auditing.",
+  "geo_contract": {
+    "default_crs": "EPSG:4326",
+    "projected_area_units": "hectares (ha) or square kilometers (km2)",
+    "distance_units": "meters (m) or kilometers (km) via spherical Haversine",
+    "area_distortion_guarantee_pct": 0.5,
+    "offline_deterministic": true,
+    "license": "MIT"
+  },
+  "tools": [
+    {
+      "name": "geograph2.audit_30x30",
+      "description": "Run a Kunming-Montreal GBF Target 3 (30x30) policy connectivity audit on a GraphJSON habitat network.",
+      "inputSchema": {
+        "type": "object",
+        "required": ["graph_json_path", "region_area_ha"],
+        "properties": {
+          "graph_json_path": {"type": "string"},
+          "region_area_ha": {"type": "number", "exclusiveMinimum": 0},
+          "site_name": {"type": "string", "default": "Study Region"},
+          "target_prot_pct": {"type": "number", "default": 30.0},
+          "target_protconn_pct": {"type": "number", "default": 17.0}
+        }
+      }
+    },
+    {
+      "name": "geograph2.solve_rsp_adjoint",
+      "description": "Compute RSP expected hitting cost and analytical adjoint sensitivities (dK/dq, dK/dP, dK/dC).",
+      "inputSchema": {
+        "type": "object",
+        "required": ["graph_json_path"],
+        "properties": {
+          "graph_json_path": {"type": "string"},
+          "beta": {"type": "number", "exclusiveMinimum": 0, "default": 1.0},
+          "alpha": {"type": "number", "exclusiveMinimum": 0, "default": 0.25}
+        }
+      }
+    },
+    {
+      "name": "geograph2.build_spherical_dggs",
+      "description": "Generate an equal-area spherical hexagonal DGGS topology (<0.5% area distortion) over a lon/lat bounding box.",
+      "inputSchema": {
+        "type": "object",
+        "required": ["bbox_lonlat"],
+        "properties": {
+          "bbox_lonlat": {
+            "type": "array",
+            "items": {"type": "number"},
+            "minItems": 4,
+            "maxItems": 4
+          },
+          "hex_radius_km": {"type": "number", "exclusiveMinimum": 0, "default": 25.0},
+          "resolution": {"type": "integer", "minimum": 0, "default": 6}
+        }
+      }
+    },
+    {
+      "name": "geograph2.run_case_study",
+      "description": "Execute one of the built-in reproducible offline ecological case studies.",
+      "inputSchema": {
+        "type": "object",
+        "required": ["case_name"],
+        "properties": {
+          "case_name": {
+            "type": "string",
+            "enum": ["protected-area-30x30", "urban-green-connectivity"]
+          }
+        }
+      }
+    }
+  ]
+}
