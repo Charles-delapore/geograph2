@@ -1,0 +1,10 @@
+[general]
+name=GeoGraph 2.0 Processing Provider
+qgisMinimumVersion=3.28
+description=Clean-Room GeoGraph 2.0 spatial habitat connectivity, RSP adjoint sensitivity, and GBF 30x30 audit algorithms.
+version=0.1.0
+author=Charles-delapore
+email=274112562+Charles-delapore@users.noreply.github.com
+repository=https://github.com/Charles-delapore/geograph2
+tags=ecology,connectivity,dggs,rsp,gbf,30x30,graph
+category=Analysis
